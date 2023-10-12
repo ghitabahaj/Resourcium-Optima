@@ -7,5 +7,9 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/test1</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">password</property>
+
+        <!-- Entity mapping -->
+        <mapping class="com.youcode.resourcium.Entities.Employee" />
+
     </session-factory>
 </hibernate-configuration>
