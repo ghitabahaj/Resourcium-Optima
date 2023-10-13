@@ -32,7 +32,6 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
-
     public Employee(){}
 
     public Employee(Long id, String username, String password, String firstName, String lastName, String email, String position) {
