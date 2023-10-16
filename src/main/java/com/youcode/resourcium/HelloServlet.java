@@ -2,7 +2,6 @@ package com.youcode.resourcium;
 
 import java.io.*;
 
-import com.youcode.resourcium.Entities.Employee;
 import com.youcode.resourcium.Service.EmployeService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,16 +21,7 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        Employee e = new Employee(1L,"ghita","123","First","Last","gh@gh.com","employe");
-        entityManager.getTransaction().begin();
-        e = entityManager.merge(e);
-        entityManager.persist(e);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        entityManagerFactory.close();
         // Hello
 
     }

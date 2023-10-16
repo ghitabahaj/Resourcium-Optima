@@ -4,10 +4,11 @@ package com.youcode.resourcium.Entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
-@Table(name = "employee")
-public class Employee {
+@Table(name = "User")
+public class User {
 
 
     @Id
@@ -29,19 +30,20 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "position")
-    private String position;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    public Employee(){}
+    public User(){}
 
-    public Employee(Long id, String username, String password, String firstName, String lastName, String email, String position) {
+    public User(Long id, String username, String password, String firstName, String lastName, String email, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.position = position;
+        this.role = role;
     }
 
     public Long getId() {
@@ -92,21 +94,36 @@ public class Employee {
         this.email = email;
     }
 
-    public String getPosition() {
-        return position;
+    public Role getRole() {
+        return role;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "firstName='" + firstName + '\'' +
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", position='" + position + '\'' +
+                ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(role, user.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, firstName, lastName, email, role);
     }
 }

@@ -18,17 +18,13 @@ public class Departement {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
-    @JoinColumn(name = "head_of_department_id")
-    private Employee headOfDepartment;
 
 
     public Departement(){}
-    public Departement(int id, String name, String description, Employee headOfDepartment) {
+    public Departement(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.headOfDepartment = headOfDepartment;
     }
 
     @Override
@@ -36,7 +32,6 @@ public class Departement {
         return "Departement{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", headOfDepartment=" + headOfDepartment +
                 '}';
     }
 }
