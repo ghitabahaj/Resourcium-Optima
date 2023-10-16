@@ -23,9 +23,6 @@ public class Tache {
     @Column(name = "priority")
     private String priority;
 
-    @ManyToOne
-    @JoinColumn(name = "assigned_employee_id")
-    private Employee assignedEmployee;
 
     @Column(name = "status")
     private String status;
@@ -34,12 +31,11 @@ public class Tache {
 
     public Tache(){}
 
-    public Tache(int id, String description, Date deadline, String priority, Employee assignedEmployee, String status) {
+    public Tache(int id, String description, Date deadline, String priority, String status) {
         this.id = id;
         this.description = description;
         this.deadline = deadline;
         this.priority = priority;
-        this.assignedEmployee = assignedEmployee;
         this.status = status;
     }
 
@@ -49,7 +45,6 @@ public class Tache {
                 "description='" + description + '\'' +
                 ", deadline=" + deadline +
                 ", priority='" + priority + '\'' +
-                ", assignedEmployee=" + assignedEmployee +
                 ", status='" + status + '\'' +
                 '}';
     }
