@@ -4,6 +4,7 @@ import com.youcode.resourcium.Entities.User;
 import com.youcode.resourcium.Entities.Role;
 
 
+import com.youcode.resourcium.Exceptions.UserAlreadyExistsException;
 import com.youcode.resourcium.Service.UserService;
 import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -58,7 +59,11 @@ public class RegisterServlet extends HttpServlet {
 
         newUser.setRole(role);
 
-        userService.addNewUser(newUser);
+        try {
+            userService.addNewUser(newUser);
+        } catch (UserAlreadyExistsException e) {
+            throw new RuntimeException(e);
+        }
 
         HttpSession session = request.getSession();
         session.setAttribute("username", username);

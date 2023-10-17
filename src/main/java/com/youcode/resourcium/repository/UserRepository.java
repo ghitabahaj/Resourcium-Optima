@@ -10,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 public class UserRepository {
         private EntityManagerFactory entityManagerFactory;
 
+
     public UserRepository(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
     }
@@ -29,6 +30,20 @@ public class UserRepository {
         return user != null;
     }
 
+    public boolean doesUserExist(String username){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username ", User.class);
+        query.setParameter("username", username);
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+        }
+        entityManager.close();
+        return user != null;
+
+    }
     public void persistUser(User user) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
