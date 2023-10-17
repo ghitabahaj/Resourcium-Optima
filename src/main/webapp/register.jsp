@@ -37,10 +37,10 @@
 
                 <div class="row mb-0">
                     <div class="text-center">
-                        <button type="submit" style="width: 45%;" class="my-2 mb-4 text-center  border-0 rounded  py-1 m-auto btn btn-success">
+                        <button type="submit" style="width: 45%;" class="my-2 mb-4 text-center  border-0 rounded  py-1 m-auto btn btn-light">
                             Register
                         </button>
-                        <button type="submit" style="width: 45%;" class="my-2 mb-4 text-center rounded py-1  m-auto btn btn-primary text-white">
+                        <button type="button" style="width: 45%;" class="my-2 mb-4 text-center rounded py-1  m-auto btn btn-primary text-white">
                             <a class="nav-link" href="login.jsp" >Back to Login</a>
                         </button>
                     </div>
