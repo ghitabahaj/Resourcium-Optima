@@ -2,6 +2,8 @@ package com.youcode.resourcium.Servlets;
 
 
 import com.youcode.resourcium.Entities.User;
+import com.youcode.resourcium.Service.UserService;
+import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,10 +19,13 @@ import java.io.Writer;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
+    private UserService userService;
 
     @Override
     public void init() throws ServletException {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        UserRepository userRepository = new UserRepository(entityManagerFactory);
+         userService = new UserService(userRepository);
     }
 
     @Override
@@ -32,7 +37,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (userExistsInDatabase(username, password)) {
+        if (userService.authenticateUser(username, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
             response.sendRedirect("home.jsp");
@@ -41,20 +46,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    private boolean userExistsInDatabase(String username, String password) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
-        query.setParameter("username", username);
-        query.setParameter("password", password);
-        User user = null;
-        try {
-            user = query.getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println(e.getMessage());
-        }
-        entityManager.close();
-        return user != null;
-    }
 
     @Override
     public void destroy() {

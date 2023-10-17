@@ -4,6 +4,8 @@ import com.youcode.resourcium.Entities.User;
 import com.youcode.resourcium.Entities.Role;
 
 
+import com.youcode.resourcium.Service.UserService;
+import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -21,12 +23,14 @@ import java.io.IOException;
 @WebServlet(value="/signup")
 public class RegisterServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
+    private UserService userService; // Declare userService as a class field
 
     @Override
     public void init() throws ServletException {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        UserRepository userRepository = new UserRepository(entityManagerFactory);
+        userService = new UserService(userRepository); // Initialize userService
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("register.jsp").forward(req, resp);
@@ -54,20 +58,14 @@ public class RegisterServlet extends HttpServlet {
 
         newUser.setRole(role);
 
-        persistUser(newUser);
+        userService.addNewUser(newUser);
 
         HttpSession session = request.getSession();
         session.setAttribute("username", username);
         response.sendRedirect("login.jsp");
     }
 
-    private void persistUser(User user) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
+
 
     @Override
     public void destroy() {
