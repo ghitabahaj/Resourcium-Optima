@@ -27,6 +27,12 @@ public class Departement {
         this.description = description;
     }
 
+    public Departement(String name, String description) {
+
+        this.name = name;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Departement{" +

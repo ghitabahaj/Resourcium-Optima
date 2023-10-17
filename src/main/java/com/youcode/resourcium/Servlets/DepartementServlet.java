@@ -26,4 +26,28 @@ public class DepartementServlet  extends HttpServlet {
         request.setAttribute("departments", departments);
         request.getRequestDispatcher("departments.jsp").forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if (action.equalsIgnoreCase("add")) {
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            Departement newDepartment = new Departement(name, description);
+            departmentService.saveDepartement(newDepartment);
+        } else if (action.equalsIgnoreCase("update")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            Departement updatedDepartment = new Departement(id, name, description);
+            departmentService.updateDepartement(updatedDepartment);
+        } else if (action.equalsIgnoreCase("delete")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Departement departmentToDelete = departmentService.getDepartementById(id);
+            departmentService.deleteDepartement(departmentToDelete);
+        }
+
+        response.sendRedirect(request.getContextPath() + "/departments");
+    }
 }
