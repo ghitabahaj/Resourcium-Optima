@@ -78,7 +78,6 @@ public class UserRepository {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
         query.setParameter("username", Username);
         return  query.getSingleResult();
-
     }
 
 

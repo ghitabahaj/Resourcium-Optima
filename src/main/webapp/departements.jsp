@@ -1,4 +1,5 @@
-
+<%@ page import="com.youcode.resourcium.Entities.Departement" %>
+<%@ page import="java.util.List" %>
 <section id="departements" class="ms-4">
 
 
@@ -23,18 +24,23 @@
             <td class="mycolor fw-bold">Description</td>
             <td class="mycolor fw-bold">Events</td>
             </thead>
+                <%
+            List<Departement> Departements = (List<Departement>) request.getAttribute("departments");
+            for (Departement dep : Departements) {
+              %>
 
+            <tr>
+                <td class="text-dark"><%= dep.getId() + 1 %></td>
+                <td class="text-dark"><%= dep.getName() %></td>
+                <td class="text-dark"><%= dep.getDescription() %></td>
+                <td class="text-dark">
+                    <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-dep" id="update-btn"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
+                    <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-dep"><i class="text-dark me-1 uil uil-eye"></i>view</button>
+                    <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-dep" id="remove-btn"><i class="text-white me-1 uil uil-trash"></i>remove</button>
+                </td>
+            </tr>
 
-
-
-
-
-
-
-
-
-
-
+                <% } %>
 
     <!-- add departement -->
 <div class="modal fade" id="modal-dep">
@@ -65,4 +71,14 @@
         </div>
     </div>
 </div>
+
+            <!-- update departement -->
+
+
+
+
+
+            <!-- remove departement -->
+
+
 </section>

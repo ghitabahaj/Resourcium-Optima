@@ -1,7 +1,9 @@
 package com.youcode.resourcium.Servlets;
 
 
+import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Entities.User;
+import com.youcode.resourcium.Service.DepartementService;
 import com.youcode.resourcium.Service.UserService;
 import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.*;
@@ -15,12 +17,13 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.List;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
     private UserService userService;
-
+    private   DepartementService departmentService;
     @Override
     public void init() throws ServletException {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");

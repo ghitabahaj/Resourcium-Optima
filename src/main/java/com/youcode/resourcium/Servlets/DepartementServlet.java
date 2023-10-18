@@ -24,11 +24,11 @@ public class DepartementServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-
         if (session != null && session.getAttribute("username") != null) {
-            List<Departement> departments = departmentService.getAllDepartements();
-            request.setAttribute("departments", departments);
-            request.getRequestDispatcher("departments.jsp").forward(request, response);
+                List<Departement> departments = departmentService.getAllDepartements();
+                request.setAttribute("departments", departments);
+                request.getRequestDispatcher("departments.jsp").forward(request, response);
+
         } else {
             response.sendRedirect("login.jsp"); // Redirect to the login page if the user is not logged in
         }
