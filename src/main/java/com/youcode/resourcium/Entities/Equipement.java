@@ -44,6 +44,14 @@ public class Equipement {
         this.department = department;
     }
 
+    public Equipement(String name, String type, Date dateOfPurchase, Date dateOfMaintenance, String state) {
+        this.name = name;
+        this.type = type;
+        this.dateOfPurchase = dateOfPurchase;
+        this.dateOfMaintenance = dateOfMaintenance;
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Equipement{" +

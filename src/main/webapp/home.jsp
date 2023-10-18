@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.io.*,java.util.*,javax.servlet.*" %>
+<%
+    String ThePage = request.getParameter("page");
+%>
 <html>
 <head>
     <title>Resourcium Optima | DashBoard</title>
@@ -12,11 +16,28 @@
     <link href="css/dash.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="
+    width: 100vw;
+    height: 100vh;
+">
 
-<div id="app">
-    <jsp:include page="sidebar.jsp" />
-    <jsp:include page="top.jsp" />
+<div id="app" class="w-100 h-100">
+    <div class="d-flex shadow-sm bg-light d-flex w-100 h-100" id="wrapper">
+        <jsp:include page="sidebar.jsp" />
+        <div id="page-content-wrapper" style="height: 100vh; overflow-y: scroll; overflow-x: hidden; flex:1;">
+            <jsp:include page="navbar.jsp" />
+            <% if(ThePage != null && ThePage.equals("dashboard")) { %>
+            <jsp:include page="top.jsp" />
+            <%} else if(ThePage != null && ThePage.equals("departements")){%>
+            <jsp:include page="departements.jsp" />
+            <%} else if(ThePage != null && ThePage.equals("UpdateAccount")){%>
+            <jsp:include page="UpdateAccount.jsp" />
+            <%} else{ %>
+            <jsp:include page="top.jsp" />
+            <%} %>
+        </div>
+    </div>
+
 </div>
 
 </body>

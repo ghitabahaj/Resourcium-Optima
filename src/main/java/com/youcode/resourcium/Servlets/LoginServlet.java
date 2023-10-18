@@ -30,7 +30,12 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("username") != null) {
+            resp.sendRedirect("home.jsp");
+        } else {
+            resp.sendRedirect("login.jsp");
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

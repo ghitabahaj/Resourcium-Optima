@@ -31,10 +31,17 @@
 //
 // });
 
-var sideBar = document.getElementById("wrapper");
-var toggleButton = document.getElementById("menu-toggle");
+let sideBar = document.getElementById("wrapper");
+let toggleButton = document.getElementById("menu-toggle");
 
 toggleButton.onclick = function () {
+    /*if(sideBar.classList.contains("toggled")){
+        sideBar.classList.remove("toggled");
+        wrapper.style.width("calc(100vw - 17rem)");
+    }else{
+        sideBar.classList.add("toggled");
+        wrapper.style.width("100vw");
+    }*/
     sideBar.classList.toggle("toggled");
 };
 

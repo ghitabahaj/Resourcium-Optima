@@ -45,7 +45,9 @@ body{
 
 #sidebar-wrapper {
     min-height: 100vh;
-    margin-left: -17rem;
+    width: 0;
+    overflow: hidden;
+    transition:  all .3s ease;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -57,15 +59,18 @@ body{
     width: 17rem;
 }
 
-#page-content-wrapper {
-    min-width: 100vw;
-
-}
 
 #wrapper.toggled #sidebar-wrapper {
-    margin-left: 0;
+    width: 17rem;
+    padding: 1em;
+    
 }
-
+#wrapper.toggled #page-content-wrapper {
+    width: calc(100vw - 17rem) !important;
+}
+#page-content-wrapper {
+    width: 100vw !important;
+}
 
 .list-group-item {
     padding: 10px 20px;

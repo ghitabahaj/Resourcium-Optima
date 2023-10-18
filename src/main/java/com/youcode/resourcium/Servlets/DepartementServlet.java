@@ -36,6 +36,7 @@ public class DepartementServlet  extends HttpServlet {
             String description = request.getParameter("description");
             Departement newDepartment = new Departement(name, description);
             departmentService.saveDepartement(newDepartment);
+
         } else if (action.equalsIgnoreCase("update")) {
             int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("name");
