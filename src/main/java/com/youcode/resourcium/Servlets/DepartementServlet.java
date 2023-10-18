@@ -7,12 +7,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "DepartementServlet", value = "/departement")
+@WebServlet(name = "DepartementServlet", value = "/departements")
 public class DepartementServlet  extends HttpServlet {
     private final DepartementService departmentService;
 
@@ -22,9 +23,15 @@ public class DepartementServlet  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Departement> departments = departmentService.getAllDepartements();
-        request.setAttribute("departments", departments);
-        request.getRequestDispatcher("departments.jsp").forward(request, response);
+        HttpSession session = request.getSession(false);
+
+        if (session != null && session.getAttribute("username") != null) {
+            List<Departement> departments = departmentService.getAllDepartements();
+            request.setAttribute("departments", departments);
+            request.getRequestDispatcher("departments.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("login.jsp"); // Redirect to the login page if the user is not logged in
+        }
     }
 
     @Override

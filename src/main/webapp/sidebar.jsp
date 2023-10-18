@@ -5,7 +5,7 @@
                 <img src="assets/img/user.png" width="40px" class="rounded-circle me-3">
                 <div>
                     <p style="margin:-5px;" class="fs-6"> <%= request.getSession().getAttribute("username") %>!</p>
-                    <p class="text-secondary fs-6"> admin123@gmail.com</p>
+                    <p class="text-secondary fs-6"> <%= request.getSession().getAttribute("email") %></p>
                 </div>
             </div>
             <div>

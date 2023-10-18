@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.io.*,java.util.*,javax.servlet.*" %>
 <%
+    HttpSession session1 = request.getSession(false);
+    if (session1 == null || session1.getAttribute("username") == null) {
+        response.sendRedirect("login.jsp");
+    }
     String ThePage = request.getParameter("page");
 %>
 <html>

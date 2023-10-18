@@ -22,9 +22,10 @@
     <div class="modal-dialog">
         <div class="d-flex justify-content-around align-items-center bg-white p-3 rounded">
             <div >
-                <img class="rounded-circle my-2" src="assets/img/user.png" width="100px" height="100px" alt="" srcset="">
-                <p>Email : <span class="fw-bold"></span></p>
-                <p>Name: <span class="fw-bold"></span></p>
+                <img class="rounded-circle my-2" src="assets/img/user.png" width="100px" height="100px">
+                <p> First Name: <span class="fw-bold"><%= request.getSession().getAttribute("FirstName") %></span></p>
+                <p> Last Name: <span class="fw-bold"><%= request.getSession().getAttribute("LastName") %></span></p>
+                <p>Email : <span class="fw-bold"><%= request.getSession().getAttribute("email") %></span></p>
             </div>
         </div>
     </div>

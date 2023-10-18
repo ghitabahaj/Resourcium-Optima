@@ -72,6 +72,16 @@ public class UserRepository {
         return !user.getUsername().isEmpty() && !user.getEmail().isEmpty() && !user.getPassword().isEmpty();
     }
 
+
+    public User getUserByUsername(String Username){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", Username);
+        return  query.getSingleResult();
+
+    }
+
+
     }
 
 

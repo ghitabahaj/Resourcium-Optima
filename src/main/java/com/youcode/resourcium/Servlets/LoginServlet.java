@@ -42,9 +42,14 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (userService.authenticateUser(username, password)) {
+        User user = userService.authenticateUser(username, password);
+
+        if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("username", username);
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("email", user.getEmail());
+            session.setAttribute("FirstName", user.getFirstName());
+            session.setAttribute("LastName", user.getLastName());
             response.sendRedirect("home.jsp");
         } else {
             response.sendRedirect("login.jsp");

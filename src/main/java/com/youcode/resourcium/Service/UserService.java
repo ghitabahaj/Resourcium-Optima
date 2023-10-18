@@ -14,8 +14,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean authenticateUser(String username, String password) {
-        return userRepository.userExistsInDatabase(username, password);
+    public User authenticateUser(String username, String password) {
+        if (username.isEmpty() || password.isEmpty()) {
+            throw new IllegalArgumentException("Username or password cannot be empty.");
+        }
+
+        User user = userRepository.getUserByUsername(username);
+
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     public void addNewUser(User user) throws UserAlreadyExistsException {
@@ -30,7 +40,7 @@ public class UserService {
                 throw new UserAlreadyExistsException("User with username " + user.getUsername() + " already exists.");
             }
         } else {
-            throw new IllegalArgumentException("Username, email, or password cannot be empty.");
+            throw new IllegalArgumentException("Username or password cannot be empty.");
         }
     }
 
