@@ -5,7 +5,8 @@
     if (session == null || session.getAttribute("username") == null) {
         response.sendRedirect("login.jsp");
     }
-    String ThePage = request.getParameter("page");
+
+       String ThePage = (String) request.getAttribute("url");
 %>
 <html>
 <head>

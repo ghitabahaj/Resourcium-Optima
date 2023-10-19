@@ -13,15 +13,15 @@ public class DepartementService {
     }
 
     public List<Departement> getAllDepartements() {
-        return departmentRepository.findAll();
+        return this.departmentRepository.findAll();
     }
 
     public Departement getDepartementById(int id) {
         return departmentRepository.findById(id);
     }
 
-    public void saveDepartement(Departement department) {
-        departmentRepository.save(department);
+    public Departement saveDepartement(Departement department) {
+         return departmentRepository.save(department);
     }
 
     public void updateDepartement(Departement department) {

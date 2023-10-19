@@ -29,6 +29,7 @@ public class EquipementServlet extends HttpServlet {
         // Handle GET requests
         // Retrieve all equipements and pass them to the view
         request.setAttribute("equipements", equipementService.getAllEquipements());
+
         request.getRequestDispatcher("equipements.jsp").forward(request, response);
     }
 
