@@ -3,8 +3,10 @@ package com.youcode.resourcium.Entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Table(name = "User")
@@ -30,13 +32,15 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "numberPhone")
+    private String numberPhone;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
     public User(){}
 
-    public User(Long id, String username, String password, String firstName, String lastName, String email, Role role) {
+    public User(Long id, String username, String password, String firstName, String lastName, String email, Role role,String numberPhone) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -44,6 +48,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.role = role;
+        this.numberPhone = numberPhone;
     }
 
     public Long getId() {
@@ -102,14 +107,25 @@ public class User {
         this.role = role;
     }
 
+
+    public String getNumberPhone() {
+        return numberPhone;
+    }
+
+    public void setNumberPhone(String numberPhone) {
+        this.numberPhone = numberPhone;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", numberPhone='" + numberPhone + '\'' +
                 ", role=" + role +
                 '}';
     }
@@ -119,11 +135,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(role, user.role);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(numberPhone, user.numberPhone) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, firstName, lastName, email, role);
+        return Objects.hash(id, username, password, firstName, lastName, email, numberPhone, role);
     }
 }

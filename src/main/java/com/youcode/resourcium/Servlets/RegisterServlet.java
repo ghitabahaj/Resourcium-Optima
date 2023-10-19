@@ -59,7 +59,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setEmail(email);
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Role role = entityManager.find(Role.class, 1L); // Assuming your Role entity has a reference to the role with ID 1
+        Role role = entityManager.find(Role.class, 4L);
         entityManager.close();
 
         newUser.setRole(role);
