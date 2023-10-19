@@ -27,7 +27,9 @@ public class Tache {
     @Column(name = "status")
     private String status;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User assignedEmployee;
 
     public Tache(){}
 

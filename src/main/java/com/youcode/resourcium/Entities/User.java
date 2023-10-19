@@ -38,7 +38,21 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @Column(name = "date_embauche")
+    private LocalDate dateEmbauche;
     public User(){}
+
+    public User(Long id, String username, String password, String firstName, String lastName, String email, Role role,String numberPhone,LocalDate dateEmbauche) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.numberPhone = numberPhone;
+        this.dateEmbauche = dateEmbauche;
+    }
 
     public User(Long id, String username, String password, String firstName, String lastName, String email, Role role,String numberPhone) {
         this.id = id;
@@ -50,7 +64,6 @@ public class User {
         this.role = role;
         this.numberPhone = numberPhone;
     }
-
     public Long getId() {
         return id;
     }
