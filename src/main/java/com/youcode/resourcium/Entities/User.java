@@ -40,6 +40,10 @@ public class User {
 
     @Column(name = "date_embauche")
     private LocalDate dateEmbauche;
+
+    @OneToOne
+    @JoinColumn(name= "department_id")
+    Departement departement;
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName, String email, Role role,String numberPhone,LocalDate dateEmbauche) {

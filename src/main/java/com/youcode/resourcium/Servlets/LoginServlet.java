@@ -23,7 +23,7 @@ import java.util.List;
 public class LoginServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
     private UserService userService;
-    private   DepartementService departmentService;
+
     @Override
     public void init() throws ServletException {
         entityManagerFactory = Persistence.createEntityManagerFactory("default");

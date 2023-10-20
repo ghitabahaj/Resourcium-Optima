@@ -16,7 +16,7 @@ public class DepartementService {
         return this.departmentRepository.findAll();
     }
 
-    public Departement getDepartementById(int id) {
+    public Departement getDepartementById(Long id) {
         return departmentRepository.findById(id);
     }
 
@@ -28,8 +28,8 @@ public class DepartementService {
         departmentRepository.update(department);
     }
 
-    public void deleteDepartement(Departement department) {
-        departmentRepository.delete(department);
+    public void deleteDepartement(Long id) {
+        departmentRepository.delete(id);
     }
 
 

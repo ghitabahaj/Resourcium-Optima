@@ -14,7 +14,7 @@
     </div>
 
     <div class="d-flex justify-content-between">
-        <p class="fs-5 ms-2 fw-bold" style="color: #183A37;"> All Departements</p>
+        <p class="fs-5 ms-2 fw-bold" style="color: #183A37;"> All Departements (<%= ((List<Departement>) request.getAttribute("departments")).size() %>)</p>
         <button class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#modal-dep" id="add-dep-btn"><i class="uil uil-plus text-white" ></i>&emsp; Add Departement</button>
     </div>
 
@@ -33,18 +33,18 @@
               %>
 
             <tr>
-                <td class="text-dark"><%= dep.getId() + 1 %></td>
+                <td class="text-dark"><%= dep.getId() %></td>
                 <td class="text-dark"><%= dep.getName() %></td>
                 <td class="text-dark"><%= dep.getDescription() %></td>
                 <td class="text-dark">
-                    <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-dep" id="update-btn" onclick="redirectToUpdate(<%= dep.getId() %>)"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
+                    <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-dep" id="update-btn"  onclick="getAttributes('<%= dep.getId() %>', '<%= dep.getName() %>', '<%= dep.getDescription() %>')"><i class="text-white me-1 uil uil-pen"></i>  Edit</button>
                     <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-dep"><i class="text-dark me-1 uil uil-eye"></i>view</button>
-                    <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-dep" id="remove-btn"><i class="text-white me-1 uil uil-trash"></i>remove</button>
+                    <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-dep" id="remove-btn" onclick="setDepId(<%= dep.getId() %>)"><i class="text-white me-1 uil uil-trash"></i>remove</button>
                 </td>
             </tr>
 
                 <% } %>
-
+        </table>
     <!-- add departement -->
 <div class="modal fade" id="modal-dep">
     <div class="modal-dialog">
@@ -74,26 +74,25 @@
         </div>
     </div>
 </div>
-
             <!-- update departement -->
 
             <div class="modal fade" id="update-dep">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="" method="POST" enctype="multipart/form-data" >
+                        <form action="updateDep" method="POST" >
+                            <input type="hidden" id="depa-id" name="depa-id" value=""/>
                             <div class="modal-header">
                                 <h5 class="modal-title">Update Department</h5>
                                 <a href="#" class="btn-close" data-bs-dismiss="modal"></a>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" id="depa-id">
                                 <div class="mb-3">
                                     <label class="form-label">Department Name</label>
-                                    <input type="text" name="name" class="form-control" id="name-dep" value=""/>
+                                    <input type="text" name="name-update" class="form-control" id="name-dep" value=""/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Departement Description </label>
-                                    <input type="text" name="name" class="form-control" id="desc-dep" value=""/>
+                                    <input type="text" name="desc-update" class="form-control" id="desc-dep" value=""/>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -104,32 +103,9 @@
                     </div>
                 </div>
             </div>
-        </table>
     </div>
-</section>
 
-
-
-            <!-- remove departement -->
-            <div class="modal fade" id="remove-dep">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="" class="p-3">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <i class="uil uil-exclamation-triangle fs-1 text-danger me-3"></i>
-                                <p class="fw-bold pt-3">Are you sure that you want to remove this Department?</p>
-                            </div>
-                            <div class="d-flex justify-content-around w-75 m-auto">
-                                <button type="submit" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn text-white bg-danger" id="delete-btn"><a style=" text-decoration: none; color:white "  href="">remove</a></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
-<!-- view pharmacy info -->
+<!-- view department info -->
 
 <div class="modal fade" id="view-dep">
     <div class="modal-dialog">
@@ -148,3 +124,22 @@
         </div>
     </div>
 </div>
+<!-- remove departement -->
+<div class="modal fade" id="remove-dep">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="removeDep"  method="POST" class="p-3">
+                <input type="hidden" id="depId" name="depId" value="" />
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="uil uil-exclamation-triangle fs-1 text-danger me-3"></i>
+                    <p class="fw-bold pt-3">Are you sure that you want to remove this Department?</p>
+                </div>
+                <div class="d-flex justify-content-around w-75 m-auto">
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn text-white bg-danger" id="delete-btn">remove</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</section>

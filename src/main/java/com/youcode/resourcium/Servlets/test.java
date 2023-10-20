@@ -14,7 +14,7 @@ public class test {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         DepartementRepository departementRepository = new DepartementRepository(entityManagerFactory);
         DepartementService departementService = new DepartementService(departementRepository);
-        System.out.println(departementService.saveDepartement(new Departement("depp","dep")));
+
 
     }
 }

@@ -1,10 +1,11 @@
 package com.youcode.resourcium.Service;
 
+import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Exceptions.UserAlreadyExistsException;
 import com.youcode.resourcium.repository.UserRepository;
 import com.youcode.resourcium.Entities.User;
 
-
+import java.util.List;
 
 
 public class UserService {
@@ -46,5 +47,9 @@ public class UserService {
 
     public String HashPass(String password){
        return userRepository.hashPassword(password);
+    }
+
+    public List<User> getAllEmployees(){
+        return userRepository.findAll();
     }
 }

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "DepartementServlet",urlPatterns= {"/departements","/saveDep"})
+@WebServlet(name = "DepartementServlet",urlPatterns= {"/departements","/saveDep","/removeDep","/updateDep"})
 public class DepartementServlet  extends HttpServlet {
 
     private  DepartementService departmentService;
@@ -53,6 +53,25 @@ public class DepartementServlet  extends HttpServlet {
             List<Departement> departments = departmentService.getAllDepartements();
             request.setAttribute("departments", departments);
             response.sendRedirect("departements");
+        }else if(path.equals("/removeDep") && request.getMethod().equals("POST") ){
+            Long id = Long.parseLong(request.getParameter("depId"));
+            departmentService.deleteDepartement(id);;
+            List<Departement> departments = departmentService.getAllDepartements();
+            request.setAttribute("departments", departments);
+            response.sendRedirect("departements");
+        }else if((path.equals("/updateDep") && request.getMethod().equals("POST"))){
+            Long idDep = Long.parseLong(request.getParameter("depa-id"));
+            System.out.println(request.getParameter("depa-id"));
+            String name = request.getParameter("name-update");
+            String description = request.getParameter("desc-update");
+            Departement departement = departmentService.getDepartementById(idDep);
+            departement.setName(name);
+            departement.setDescription(description);
+            departmentService.updateDepartement(departement);
+            List<Departement> departments = departmentService.getAllDepartements();
+            request.setAttribute("departments", departments);
+            response.sendRedirect("departements");
+
         }
     }
     }

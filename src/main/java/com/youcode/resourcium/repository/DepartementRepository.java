@@ -20,7 +20,7 @@ public class DepartementRepository {
         return query.getResultList();
     }
 
-    public Departement findById(int id) {
+    public Departement findById(Long id) {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(Departement.class, id);
@@ -37,12 +37,37 @@ public class DepartementRepository {
 
     public void update(Departement department) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.merge(department);
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Departement mergedDepartment = entityManager.merge(department); // Capture the merged instance
+            entityManager.persist(mergedDepartment); // Persist the changes
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace(); // Handle or log the exception as needed
+        } finally {
+            entityManager.close();
+        }
     }
 
-    public void delete(Departement department) {
+    public void delete(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.remove(department);
+        try {
+            entityManager.getTransaction().begin();
+            Departement department = entityManager.find(Departement.class, id);
+            if (department != null) {
+                entityManager.remove(department);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            // Handle the exception appropriately
+        } finally {
+            entityManager.close();
+        }
     }
 
 }

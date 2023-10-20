@@ -9,6 +9,7 @@ import jakarta.persistence.TypedQuery;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 
 
 public class UserRepository {
@@ -78,6 +79,13 @@ public class UserRepository {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
         query.setParameter("username", Username);
         return  query.getSingleResult();
+    }
+
+    public List<User> findAll(){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.role.id = :role" , User.class);
+        query.setParameter("role",1);
+        return query.getResultList();
     }
 
 
