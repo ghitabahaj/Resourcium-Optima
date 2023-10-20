@@ -39,6 +39,8 @@
             <jsp:include page="UpdateAccount.jsp" />
             <%} else if(ThePage != null && ThePage.equals("users")){%>
             <jsp:include page="users.jsp" />
+            <%} else if(ThePage != null && ThePage.equals("equipements")){%>
+            <jsp:include page="equipements.jsp" />
             <%} else{ %>
             <jsp:include page="top.jsp" />
             <%} %>
@@ -55,6 +57,9 @@
 <script>
     function setDepId(id) {
         document.getElementById('depId').value = id;
+    }
+    function setEmpId(id) {
+        document.getElementById('EmpId').value = id;
     }
 
     function getAttributes(id,name,desc){

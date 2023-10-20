@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(urlPatterns = {"/users" , "/addEmployee" , "/removeEmployee"})
+@WebServlet(urlPatterns = {"/users" , "/addEmployee" , "/removeEmployee" , "/removeUser" ,"/updateEmployee"})
 public class UserServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
     private UserService userService;
@@ -49,6 +49,14 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String path = req.getServletPath();
+        if (path.equals("/removeUser") && req.getMethod().equals("POST")) {
+            Long id = Long.parseLong(req.getParameter("EmpId"));
+            userService.deleteUser(id);
+            List<User> employees = userService.getAllEmployees();
+            req.setAttribute("employees", employees);
+            resp.sendRedirect("users");
+        }
 
     }
 }

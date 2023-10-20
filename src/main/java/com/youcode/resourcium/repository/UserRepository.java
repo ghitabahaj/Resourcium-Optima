@@ -1,5 +1,6 @@
 package com.youcode.resourcium.repository;
 
+import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -86,6 +87,23 @@ public class UserRepository {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.role.id = :role" , User.class);
         query.setParameter("role",1);
         return query.getResultList();
+    }
+
+    public void delete(Long id){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            User user = entityManager.find(User.class, id);
+            if (user != null) {
+                entityManager.remove(user);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            // Handle the exception appropriately
+        } finally {
+            entityManager.close();
+        }
     }
 
 
