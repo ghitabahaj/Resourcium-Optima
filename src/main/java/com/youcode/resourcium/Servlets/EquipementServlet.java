@@ -1,6 +1,7 @@
 package com.youcode.resourcium.Servlets;
 
 import com.youcode.resourcium.Entities.Equipement;
+import com.youcode.resourcium.Exceptions.CustomEquipementException;
 import com.youcode.resourcium.Service.EquipementService;
 
 import com.youcode.resourcium.repository.EquipementRepository;
@@ -26,9 +27,11 @@ public class EquipementServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Handle GET requests
-        // Retrieve all equipements and pass them to the view
-        request.setAttribute("equipements", equipementService.getAllEquipements());
+        try {
+            request.setAttribute("equipements", equipementService.getAllEquipements());
+        } catch (CustomEquipementException e) {
+            throw new RuntimeException(e);
+        }
 
         request.getRequestDispatcher("equipements.jsp").forward(request, response);
     }

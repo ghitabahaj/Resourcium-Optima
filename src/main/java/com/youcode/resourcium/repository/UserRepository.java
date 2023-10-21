@@ -2,10 +2,7 @@ package com.youcode.resourcium.repository;
 
 import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Entities.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -106,6 +103,29 @@ public class UserRepository {
         }
     }
 
+
+    public void update(User user) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            User mergedUser = entityManager.merge(user); // Capture the merged instance
+            entityManager.persist(mergedUser); // Persist the changes
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace(); // Handle or log the exception as needed
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public User findById(Long id){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        return entityManager.find(User.class, id);
+    }
 
     }
 

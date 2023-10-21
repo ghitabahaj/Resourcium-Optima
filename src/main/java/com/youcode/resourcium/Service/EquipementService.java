@@ -15,8 +15,13 @@ public class EquipementService {
         this.equipementRepository = equipementRepository;
     }
 
-    public List<Equipement> getAllEquipements() {
-        return equipementRepository.findAll();
+    public List<Equipement> getAllEquipements() throws CustomEquipementException {
+        try {
+            return equipementRepository.findAll();
+        } catch (Exception e) {
+            // Log the exception or rethrow it as a custom exception
+            throw new CustomEquipementException("Failed to retrieve all equipements", e);
+        }
     }
 
     public Equipement getEquipementById(int id) throws EquipementNotFoundException, CustomEquipementException {
@@ -29,16 +34,28 @@ public class EquipementService {
         }
     }
 
-    public void saveEquipement(Equipement equipement) {
-        equipementRepository.save(equipement);
+    public void saveEquipement(Equipement equipement) throws CustomEquipementException {
+        try {
+            equipementRepository.save(equipement);
+        } catch (Exception e) {
+            throw new CustomEquipementException("Failed to save equipement", e);
+        }
     }
 
-    public void updateEquipement(Equipement equipement) {
-        equipementRepository.update(equipement);
+    public void updateEquipement(Equipement equipement) throws CustomEquipementException {
+        try {
+            equipementRepository.update(equipement);
+        } catch (Exception e) {
+            throw new CustomEquipementException("Failed to update equipement", e);
+        }
     }
 
-    public void deleteEquipement(Equipement equipement) {
-        equipementRepository.delete(equipement);
+    public void deleteEquipement(Equipement equipement) throws CustomEquipementException {
+        try {
+            equipementRepository.delete(equipement);
+        } catch (Exception e) {
+            throw new CustomEquipementException("Failed to delete equipement", e);
+        }
     }
 
 }

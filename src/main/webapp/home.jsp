@@ -67,6 +67,17 @@
         document.getElementById('name-dep').value = name;
         document.getElementById('desc-dep').value = desc;
     }
+
+
+    function setAttributesEmp(id,first,last,username,email,number,departement){
+        document.getElementById('UpdateId').value = id ;
+        document.getElementById('updateFName').value = first;
+        document.getElementById('updateLName').value =last ;
+        document.getElementById('updateUsername').value = username;
+        document.getElementById('UpdateEmail').value = email;
+        document.getElementById('Update-number').value = number;
+        document.getElementById('dep_id_update').value = departement;
+    }
 </script>
 
 </html>

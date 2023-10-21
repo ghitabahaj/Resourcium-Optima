@@ -1,5 +1,6 @@
 <%@ page import="com.youcode.resourcium.Entities.User" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.youcode.resourcium.Entities.Departement" %>
 <section id="users" class="container-fluid">
 
     <h3  class="fw-bold mb-5 mycolor2" ><i class="uil uil-users-alt me-2 fs-4" ></i>Employees</h3>
@@ -127,6 +128,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="updateEmployee" method="POST">
+                    <input type="hidden" id="UpdateId" name="EmpIdUpdate" value="" />
                     <div class="modal-header">
                         <h5 class="modal-title">Update Existing Employee</h5>
                         <a href="#" class="btn-close" data-bs-dismiss="modal"></a>
@@ -134,11 +136,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Employee's First Name</label>
-                            <input type="text" name="first-name" class="form-control" id="updateFName"/>
+                            <input type="text" name="first-name-update" class="form-control" id="updateFName"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Last Name</label>
-                            <input type="text" name="last-name" id="updateLName" class="form-control"/>
+                            <input type="text" name="last-name-update" id="updateLName" class="form-control"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Username</label>
@@ -146,18 +148,27 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Department</label>
-                            <select class="form-select" name="dep_id" required>
-                                <option value="null" >SELECT THE EMPLOYEE'S DEPARTMENT</option>
 
-                                <option value=""></option>
+                            <select class="form-select" name="dep-id" required>
 
-                                <option value=""></option>
+                                <option id="dep_id_update" name="id-dep-up" value="" selected> </option>
+                                <%
+                                List<Departement> Departements = (List<Departement>) request.getAttribute("departments");
+                                for (Departement dep : Departements) {
+                            %>
+                                <option value="<%= dep.getId()%>"><%= dep.getName()%></option>
+
+                                <% } %>
                             </select>
 
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Employee's number Phone</label>
+                            <input type="text" name="number-update" id="Update-number" class="form-control"/>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Employee's email</label>
-                            <input type="text" name="email-update" class="form-control"/>
+                            <input type="text" name="email-update" id="UpdateEmail" class="form-control"/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Password</label>
