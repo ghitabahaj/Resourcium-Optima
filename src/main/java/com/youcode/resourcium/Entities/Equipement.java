@@ -52,6 +52,62 @@ public class Equipement {
         this.state = state;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getDateOfPurchase() {
+        return dateOfPurchase;
+    }
+
+    public void setDateOfPurchase(Date dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public Date getDateOfMaintenance() {
+        return dateOfMaintenance;
+    }
+
+    public void setDateOfMaintenance(Date dateOfMaintenance) {
+        this.dateOfMaintenance = dateOfMaintenance;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Departement getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Departement department) {
+        this.department = department;
+    }
+
     @Override
     public String toString() {
         return "Equipement{" +

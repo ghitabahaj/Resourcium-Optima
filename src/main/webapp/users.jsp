@@ -38,7 +38,7 @@
                 <td class="text-dark"><%= emp.getLastName() %></td>
                 <td class="text-dark"><%= emp.getEmail() %></td>
                 <td class="text-dark"><%= emp.getNumberPhone() %></td>
-                <td class="text-dark"><%= emp.getDepartement().getName() %></td>
+                <td class="text-dark"><%= emp.getDepartement() != null ? emp.getDepartement().getName() : "No Departemnt" %></td>
                 <td class="text-dark">0</td>
                 <td class="text-dark">
                     <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-user" id="update-btn"  onclick="setAttributesEmp('<%= emp.getId()%>','<%= emp.getFirstName()%>' ,'<%= emp.getLastName()%>','<%= emp.getUsername()%>','<%= emp.getEmail()%>' ,'<%= emp.getNumberPhone()%>','<%= emp.getDepartement()%>')"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
@@ -246,44 +246,22 @@
         </div>
     </div>
 
-    <%--Tasks info--%>
-    <!-- Modal for displaying tasks assigned to the employee -->
-    <div class="modal fade" id="view-tasks" tabindex="-1" role="dialog" aria-labelledby="view-tasks-label" aria-hidden="true">
+
+    <div class="modal fade" id="view-tasks" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="view-tasks-label">Employee's Tasks</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form to get tasks for the selected employee -->
                     <form action="getTasks" method="GET">
                         <input type="hidden" name="employeeId" id="employeeId" value="">
                         <button type="submit" class="btn btn-primary">Get Tasks</button>
+
                     </form>
-                    <table class="table">
-                        <thead>
-                        <th>Task Title</th>
-                        <th>Description</th>
-                        <th>Deadline</th>
-                        <th>Priority</th>
-                        <th>Status</th>
-                        </thead>
-                        <tbody>
-                        <% List<Tache> tasks = (List<Tache>) request.getAttribute("tasks");  %>
-                        <% for (Tache task : tasks) { %>
-                        <tr>
-                            <td><%= task.getTitle() %></td>
-                            <td><%= task.getDescription() %></td>
-                            <td><%= task.getDeadline() %></td>
-                            <td><%= task.getPriority() %></td>
-                            <td><%= task.getStatus() %></td>
-                        </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
+             >
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -291,5 +269,6 @@
             </div>
         </div>
     </div>
+
 
 </section>
