@@ -4,9 +4,7 @@ package com.youcode.resourcium.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name = "User")
@@ -44,6 +42,11 @@ public class User {
     @OneToOne
     @JoinColumn(name= "department_id")
     Departement departement;
+
+    @Column(name = "tasks")
+    @OneToMany
+    @JoinColumn(name = "task")
+    private List<Tache> tasks = new ArrayList<>();
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName, String email, Role role,String numberPhone,LocalDate dateEmbauche) {
@@ -147,6 +150,10 @@ public class User {
 
     public void setDepartement(Departement departement) {
         this.departement = departement;
+    }
+
+    public void addTask(Tache task) {
+        this.tasks.add(task);
     }
 
     @Override

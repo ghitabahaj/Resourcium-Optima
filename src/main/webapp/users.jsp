@@ -1,6 +1,7 @@
 <%@ page import="com.youcode.resourcium.Entities.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.youcode.resourcium.Entities.Departement" %>
+<%@ page import="com.youcode.resourcium.Entities.Tache" %>
 <section id="users" class="container-fluid">
 
     <h3  class="fw-bold mb-5 mycolor2" ><i class="uil uil-users-alt me-2 fs-4" ></i>Employees</h3>
@@ -36,13 +37,14 @@
                 <td class="text-dark"><%= emp.getFirstName() %></td>
                 <td class="text-dark"><%= emp.getLastName() %></td>
                 <td class="text-dark"><%= emp.getEmail() %></td>
-                <td class="text-dark">0</td>
-                <td class="text-dark">0</td>
+                <td class="text-dark"><%= emp.getNumberPhone() %></td>
+                <td class="text-dark"><%= emp.getDepartement().getName() %></td>
                 <td class="text-dark">0</td>
                 <td class="text-dark">
                     <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-user" id="update-btn"  onclick="setAttributesEmp('<%= emp.getId()%>','<%= emp.getFirstName()%>' ,'<%= emp.getLastName()%>','<%= emp.getUsername()%>','<%= emp.getEmail()%>' ,'<%= emp.getNumberPhone()%>','<%= emp.getDepartement()%>')"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
-                    <button class="btn btn-primary text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#assign-task"><i class="text-white me-1 uil uil-pen"></i>Assign Task(s)</button>
+                    <button class="btn btn-primary text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#assign-task-modal" onclick="setIdTask('<%= emp.getId()%>')"><i class="text-white me-1 uil uil-pen"></i>Assign Task(s)</button>
                     <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-Employee" id="remove-btn" onclick="setEmpId(<%= emp.getId() %>)"><i class="text-white me-1 uil uil-trash"></i>remove</button>
+                    <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-tasks" id="view-btn" onclick="setEmpIdView(<%= emp.getId() %>)"><i class="text-dark me-1 uil uil-eye"></i>Tasks Information</button>
                 </td>
             </tr>
             <% } %>
@@ -180,6 +182,112 @@
                         <button type="submit" name="update-employee" class="btn btn-warning text-white" >Update</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <%-- Assign Task  --%>
+
+    <!-- Modal for Assigning Task to Employee -->
+    <div class="modal fade" id="assign-task-modal" tabindex="-1" role="dialog" aria-labelledby="assign-task-modal-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assign-task-modal-label">Assign Task to Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add form elements here for assigning the task to the employee -->
+                    <form action="assignTaskToEmployee" method="POST">
+                        <input type="hidden" id="AssignId" name="assignTask" value="" />
+
+                        <div class="form-group">
+                            <label for="task-title">Task Title:</label>
+                            <input type="text" class="form-control" id="task-title" name="task-title">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-description">Task Description:</label>
+                            <input type="text" class="form-control" id="task-description" name="task-description">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-status">Task Status:</label>
+                            <select class="form-control" id="task-status" name="task-status">
+                                <option value="pending">Pending</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-deadline">Task Deadline:</label>
+                            <input type="date" class="form-control" id="task-deadline" name="task-deadline">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-priority">Task Priority:</label>
+                            <select class="form-control" id="task-priority" name="task-priority">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <!-- Add more form elements here as needed -->
+                        <div class="form-group">
+                            <label for="employee-id">Employee ID:</label>
+                            <input type="text" class="form-control" id="employee-id" name="employee-id">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Assign Task</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%--Tasks info--%>
+    <!-- Modal for displaying tasks assigned to the employee -->
+    <div class="modal fade" id="view-tasks" tabindex="-1" role="dialog" aria-labelledby="view-tasks-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-tasks-label">Employee's Tasks</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form to get tasks for the selected employee -->
+                    <form action="getTasks" method="GET">
+                        <input type="hidden" name="employeeId" id="employeeId" value="">
+                        <button type="submit" class="btn btn-primary">Get Tasks</button>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <th>Task Title</th>
+                        <th>Description</th>
+                        <th>Deadline</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        </thead>
+                        <tbody>
+                        <% List<Tache> tasks = (List<Tache>) request.getAttribute("tasks");  %>
+                        <% for (Tache task : tasks) { %>
+                        <tr>
+                            <td><%= task.getTitle() %></td>
+                            <td><%= task.getDescription() %></td>
+                            <td><%= task.getDeadline() %></td>
+                            <td><%= task.getPriority() %></td>
+                            <td><%= task.getStatus() %></td>
+                        </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

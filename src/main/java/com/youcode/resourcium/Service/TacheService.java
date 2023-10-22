@@ -31,4 +31,8 @@ public class TacheService {
     public void deleteTask(int id) {
         taskRepository.delete(id);
     }
+
+    public List<Tache> getTasksByEmployeeId(Long employeeId) {
+        return taskRepository.getTasksByEmployeeId(employeeId);
+    }
 }

@@ -78,6 +78,13 @@
         document.getElementById('Update-number').value = number;
         document.getElementById('dep_id_update').value = departement;
     }
+
+    function setIdTask(id){
+        document.getElementById('AssignId').value = id;
+    }
+    function setEmpIdView(id){
+        document.getElementById('employeeId').value = id;
+    }
 </script>
 
 </html>

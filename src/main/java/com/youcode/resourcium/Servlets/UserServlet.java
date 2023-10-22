@@ -1,10 +1,13 @@
 package com.youcode.resourcium.Servlets;
 
 import com.youcode.resourcium.Entities.Departement;
+import com.youcode.resourcium.Entities.Tache;
 import com.youcode.resourcium.Entities.User;
 import com.youcode.resourcium.Service.DepartementService;
+import com.youcode.resourcium.Service.TacheService;
 import com.youcode.resourcium.Service.UserService;
 import com.youcode.resourcium.repository.DepartementRepository;
+import com.youcode.resourcium.repository.TacheRepository;
 import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -17,14 +20,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
-@WebServlet(urlPatterns = {"/users" , "/addEmployee" , "/removeEmployee" , "/removeUser" ,"/updateEmployee"})
+@WebServlet(urlPatterns = {"/users" , "/addEmployee" , "/removeEmployee" , "/removeUser" ,"/updateEmployee" ,"/assignTaskToEmployee","/getTasks"})
 public class UserServlet extends HttpServlet {
     private EntityManagerFactory entityManagerFactory;
     private UserService userService;
     private  DepartementService departmentService;
+    private TacheService tacheService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -33,6 +40,8 @@ public class UserServlet extends HttpServlet {
         userService = new UserService(userRepository);
         DepartementRepository departementRepository = new DepartementRepository(entityManagerFactory);
         departmentService = new DepartementService(departementRepository);
+        TacheRepository tacheRepository = new TacheRepository(entityManagerFactory);
+        tacheService = new TacheService(tacheRepository);
 
     }
 
@@ -86,6 +95,55 @@ public class UserServlet extends HttpServlet {
             List<User> employees = userService.getAllEmployees();
             req.setAttribute("employees", employees);
             resp.sendRedirect("users");
+         }else if (path.equals("/assignTaskToEmployee") && req.getMethod().equals("POST")) {
+            String title = req.getParameter("task-title");
+            String description = req.getParameter("task-description");
+            String deadlineString = req.getParameter("task-deadline");
+            String priority = req.getParameter("task-priority"); // Assuming priority is a String
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String status = "pending";
+            Date deadline = null;
+            try {
+                deadline = formatter.parse(deadlineString);
+            } catch (ParseException e) {
+                e.printStackTrace(); // Handle or log the exception as needed
+            }
+            Long employeeId = Long.parseLong(req.getParameter("employee-id"));
+
+            // Retrieve the employee by ID using the employeeId
+            User employee = userService.getUserById(employeeId);
+
+            // Create a new task and set its details
+            Tache task = new Tache();
+            task.setTitle(title);
+            task.setDescription(description);
+            task.setDeadline(deadline);
+            task.setPriority(priority);
+            task.setAssignedEmployee(employee);
+            task.setStatus(status);
+
+            tacheService.saveTask(task);
+
+            // Assign the task to the employee
+            employee.addTask(task);
+
+            userService.updateUser(employee);
+
+            List<User> employees = userService.getAllEmployees();
+            req.setAttribute("employees", employees);
+            resp.sendRedirect("users");
+
+        }else if(path.equals("/getTasks") && req.getMethod().equals("GET")){
+            String employeeIdString = req.getParameter("employeeId");
+            Long employeeId = Long.parseLong(employeeIdString);
+
+            List<Tache> tasks = tacheService.getTasksByEmployeeId(employeeId);
+
+            req.setAttribute("tasks", tasks);
+            List<User> employees = userService.getAllEmployees();
+            req.setAttribute("employees", employees);
+            resp.sendRedirect("users");
+
         }
 
     }

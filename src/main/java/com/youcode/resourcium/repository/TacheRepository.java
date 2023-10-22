@@ -84,5 +84,13 @@ public class TacheRepository {
             entityManager.close();
         }
     }
+
+
+    public List<Tache> getTasksByEmployeeId(Long employeeId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<Tache> query = entityManager.createQuery("SELECT t FROM Tache t WHERE t.assignedEmployee.id = :employeeId", Tache.class);
+        query.setParameter("employeeId", employeeId);
+        return query.getResultList();
+    }
     }
 
