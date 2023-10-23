@@ -1,14 +1,17 @@
 package com.youcode.resourcium.Servlets;
 
 import com.youcode.resourcium.Entities.Departement;
+import com.youcode.resourcium.Entities.Role;
 import com.youcode.resourcium.Entities.Tache;
 import com.youcode.resourcium.Entities.User;
+import com.youcode.resourcium.Exceptions.UserAlreadyExistsException;
 import com.youcode.resourcium.Service.DepartementService;
 import com.youcode.resourcium.Service.TacheService;
 import com.youcode.resourcium.Service.UserService;
 import com.youcode.resourcium.repository.DepartementRepository;
 import com.youcode.resourcium.repository.TacheRepository;
 import com.youcode.resourcium.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletConfig;
@@ -88,9 +91,10 @@ public class UserServlet extends HttpServlet {
             user.setFirstName(Fname);
             user.setLastName(Lname);
             user.setNumberPhone(Phone);
-            user.setNumberPhone(Phone);
             user.setUsername(Username);
             user.setDepartement(department);
+
+            userService.updateUser(user);
 
             List<User> employees = userService.getAllEmployees();
             req.setAttribute("employees", employees);
@@ -143,6 +147,36 @@ public class UserServlet extends HttpServlet {
             List<User> employees = userService.getAllEmployees();
             req.setAttribute("employees", employees);
             resp.sendRedirect("users");
+
+        }else if(path.equals("/addEmployee") && req.getMethod().equals("POST")){
+            String firstName = req.getParameter("first-name");
+            String lastName = req.getParameter("last-name");
+            String username = req.getParameter("username-add");
+            String departmentId = req.getParameter("dep_id");
+            String email = req.getParameter("email-add");
+            String password = req.getParameter("password-add");
+            String phone = req.getParameter("phone-add");
+            Long dep = Long.parseLong(departmentId);
+
+           Departement department =  departmentService.getDepartementById(dep);
+
+            EntityManager entityManager = entityManagerFactory.createEntityManager();
+            Role role = entityManager.find(Role.class, 1L);
+            entityManager.close();
+            User u = new User(firstName,lastName,username,department,email,password,phone);
+            u.setRole(role);
+
+            try {
+                userService.addNewUser(u);
+
+            } catch (UserAlreadyExistsException e) {
+                throw new RuntimeException(e);
+            }
+
+            List<User> employees = userService.getAllEmployees();
+            req.setAttribute("employees", employees);
+            resp.sendRedirect("users");
+
 
         }
 

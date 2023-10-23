@@ -55,36 +55,41 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script>
-    function setDepId(id) {
-        document.getElementById('depId').value = id;
-    }
-    function setEmpId(id) {
-        document.getElementById('EmpId').value = id;
-    }
+        function setDepId(id) {
+            document.getElementById('depId').value = id;
+        }
+        function setEmpId(id) {
+            document.getElementById('EmpId').value = id;
+        }
 
-    function getAttributes(id,name,desc){
-        document.getElementById('depa-id').value = id;
-        document.getElementById('name-dep').value = name;
-        document.getElementById('desc-dep').value = desc;
-    }
+        function getAttributes(id,name,desc){
+            document.getElementById('depa-id').value = id;
+            document.getElementById('name-dep').value = name;
+            document.getElementById('desc-dep').value = desc;
+        }
 
 
-    function setAttributesEmp(id,first,last,username,email,number,departement){
-        document.getElementById('UpdateId').value = id ;
-        document.getElementById('updateFName').value = first;
-        document.getElementById('updateLName').value =last ;
-        document.getElementById('updateUsername').value = username;
-        document.getElementById('UpdateEmail').value = email;
-        document.getElementById('Update-number').value = number;
-        document.getElementById('dep_id_update').value = departement;
-    }
+        function setAttributesEmp(id,first,last,username,email,number,departement){
+            document.getElementById('UpdateId').value = id ;
+            document.getElementById('updateFName').value = first;
+            document.getElementById('updateLName').value =last ;
+            document.getElementById('updateUsername').value = username;
+            document.getElementById('UpdateEmail').value = email;
+            document.getElementById('Update-number').value = number;
+            document.getElementById('password_update').value = "password";
+            document.getElementById('dep-id').value = departement;
+        }
 
-    function setIdTask(id){
-        document.getElementById('AssignId').value = id;
-    }
-    function setEmpIdView(id){
-        document.getElementById('employeeId').value = id;
-    }
+        function setIdTask(id){
+            document.getElementById('AssignId').value = id;
+        }
+        function setEmpIdView(id){
+            document.getElementById('employeeId').value = id;
+        }
+
+        function setEquId(id){
+            document.getElementById('equipmentId').value = id ;
+        }
 </script>
 
 </html>

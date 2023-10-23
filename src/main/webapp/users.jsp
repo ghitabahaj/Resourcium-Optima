@@ -41,7 +41,7 @@
                 <td class="text-dark"><%= emp.getDepartement() != null ? emp.getDepartement().getName() : "No Departemnt" %></td>
                 <td class="text-dark">0</td>
                 <td class="text-dark">
-                    <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-user" id="update-btn"  onclick="setAttributesEmp('<%= emp.getId()%>','<%= emp.getFirstName()%>' ,'<%= emp.getLastName()%>','<%= emp.getUsername()%>','<%= emp.getEmail()%>' ,'<%= emp.getNumberPhone()%>','<%= emp.getDepartement()%>')"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
+                    <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-user" id="update-btn" onclick="setAttributesEmp(`<%= emp.getId()%>`, `<%= emp.getFirstName()%>`, `<%= emp.getLastName()%>`, `<%= emp.getUsername()%>`, `<%= emp.getEmail()%>`, `<%= emp.getNumberPhone()%>`, `<%= emp.getDepartement().getId()%>`)"><i class="text-white me-1 uil uil-pen"></i>Edit</button>
                     <button class="btn btn-primary text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#assign-task-modal" onclick="setIdTask('<%= emp.getId()%>')"><i class="text-white me-1 uil uil-pen"></i>Assign Task(s)</button>
                     <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-Employee" id="remove-btn" onclick="setEmpId(<%= emp.getId() %>)"><i class="text-white me-1 uil uil-trash"></i>remove</button>
                     <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-tasks" id="view-btn" onclick="setEmpIdView(<%= emp.getId() %>)"><i class="text-dark me-1 uil uil-eye"></i>Tasks Information</button>
@@ -95,13 +95,19 @@
                         <input type="text" name="username-add" class="form-control"/>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Employee's Phone Number</label>
+                        <input type="text" name="phone-add" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Employee's Department</label>
                         <select class="form-select" name="dep_id" required>
-                            <option value="null" >SELECT THE EMPLOYEE'S DEPARTMENT</option>
-
-                            <option value=""></option>
-
-                            <option value=""></option>
+                            <option value="">SELECT THE EMPLOYEE'S DEPARTMENT</option>
+                            <%
+                                List<Departement> departments = (List<Departement>) request.getAttribute("departments");
+                                for (Departement dep : departments) {
+                            %>
+                            <option value="<%= dep.getId()%>"><%= dep.getName()%></option>
+                            <% } %>
                         </select>
 
                     </div>
@@ -138,20 +144,20 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Employee's First Name</label>
-                            <input type="text" name="first-name-update" class="form-control" id="updateFName"/>
+                            <input type="text" name="first-name-update" class="form-control" id="updateFName" value=""/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Last Name</label>
-                            <input type="text" name="last-name-update" id="updateLName" class="form-control"/>
+                            <input type="text" name="last-name-update" id="updateLName" class="form-control" value=""/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Username</label>
-                            <input type="text" name="username-update" id="updateUsername"  class="form-control"/>
+                            <input type="text" name="username-update" id="updateUsername"  class="form-control" value=""/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Department</label>
 
-                            <select class="form-select" name="dep-id" required>
+                            <select class="form-select" id="dep-id" name="dep-id" required>
 
                                 <option id="dep_id_update" name="id-dep-up" value="" selected> </option>
                                 <%
@@ -166,15 +172,15 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's number Phone</label>
-                            <input type="text" name="number-update" id="Update-number" class="form-control"/>
+                            <input type="text" name="number-update" id="Update-number" class="form-control" value=""/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's email</label>
-                            <input type="text" name="email-update" id="UpdateEmail" class="form-control"/>
+                            <input type="text" name="email-update" id="UpdateEmail" class="form-control" value=""/>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Employee's Password</label>
-                            <input type="text" name="password-update" class="form-control" disabled/>
+                            <input type="password" id="password_update" name="password-update" class="form-control" disabled/>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -247,21 +253,17 @@
     </div>
 
 
-    <div class="modal fade" id="view-tasks" >
+    <div class="modal fade" id="view-tasks" tabindex="-1" role="dialog" aria-labelledby="assign-task-modal-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="view-tasks-label">Employee's Tasks</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="getTasks" method="GET">
-                        <input type="hidden" name="employeeId" id="employeeId" value="">
-                        <button type="submit" class="btn btn-primary">Get Tasks</button>
+                    <!-- Add form elements here for assigning the task to the employee -->
 
-                    </form>
-             >
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -269,6 +271,9 @@
             </div>
         </div>
     </div>
+
+
+
 
 
 </section>

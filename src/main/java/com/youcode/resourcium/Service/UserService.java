@@ -4,6 +4,7 @@ import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Exceptions.UserAlreadyExistsException;
 import com.youcode.resourcium.repository.UserRepository;
 import com.youcode.resourcium.Entities.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -63,5 +64,14 @@ public class UserService {
 
     public User getUserById(Long id){
         return userRepository.findById(id);
+    }
+
+    public String hashPassword(String password) {
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        return hashedPassword;
+    }
+
+    public boolean verifyPassword(String inputPassword, String hashedPassword) {
+        return BCrypt.checkpw(inputPassword, hashedPassword);
     }
 }

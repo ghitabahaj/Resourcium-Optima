@@ -29,6 +29,7 @@
 
                 <%
             List<Departement> Departements = (List<Departement>) request.getAttribute("departments");
+                    System.out.println(Departements);
             for (Departement dep : Departements) {
               %>
 
@@ -38,7 +39,7 @@
                 <td class="text-dark"><%= dep.getDescription() %></td>
                 <td class="text-dark">
                     <button class="btn btn-warning text-white rounded-pill" data-bs-toggle="modal" data-bs-target="#update-dep" id="update-btn"  onclick="getAttributes('<%= dep.getId() %>', '<%= dep.getName() %>', '<%= dep.getDescription() %>')"><i class="text-white me-1 uil uil-pen"></i>  Edit</button>
-                    <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-dep"><i class="text-dark me-1 uil uil-eye"></i>view</button>
+                    <button class="btn btn-light rounded-pill" data-bs-toggle="modal" data-bs-target="#view-dep"><i class="text-dark me-1 uil uil-eye" ></i>view</button>
                     <button class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#remove-dep" id="remove-btn" onclick="setDepId(<%= dep.getId() %>)"><i class="text-white me-1 uil uil-trash"></i>remove</button>
                 </td>
             </tr>
@@ -114,12 +115,12 @@
                 <img class="rounded-circle" src="assets/img/dep.jpg" width="100px" height="100px">
             </div>
             <div>
-                <p>Department Name : <span class="fw-bold"></span></p>
-                <p>Description : <span class="fw-bold"></span></p>
+                <p >Department Name : <span class="fw-bold" id="view-name"> </span></p>
+                <p>Description : <span class="fw-bold"  id="view-desc"> </span></p>
             </div>
             <div>
-                <p>Head Of Department: <span class="fw-bold"></span></p>
-                <p>Number Phone : <span class="fw-bold"></span></p>
+                <p>Head Of Department: <span class="fw-bold">MEE</span></p>
+                <p>Number Phone :<span class="fw-bold">+212789345690</span> </p>
             </div>
         </div>
     </div>

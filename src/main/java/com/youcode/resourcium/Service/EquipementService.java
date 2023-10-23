@@ -19,7 +19,6 @@ public class EquipementService {
         try {
             return equipementRepository.findAll();
         } catch (Exception e) {
-            // Log the exception or rethrow it as a custom exception
             throw new CustomEquipementException("Failed to retrieve all equipements", e);
         }
     }
@@ -56,6 +55,17 @@ public class EquipementService {
         } catch (Exception e) {
             throw new CustomEquipementException("Failed to delete equipement", e);
         }
+    }
+
+    public Equipement getEquipementById(Long id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid equipement ID");
+        }
+        Equipement equipement = equipementRepository.getEquipementById(id);
+        if (equipement == null) {
+            throw new IllegalArgumentException("Equipement not found for ID: " + id);
+        }
+        return equipement;
     }
 
 }

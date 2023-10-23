@@ -18,7 +18,9 @@ public class Departement {
     @Column(name = "description")
     private String description;
 
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User ChefDepartment;
 
     public Departement(){}
     public Departement(int id, String name, String description) {
@@ -31,6 +33,12 @@ public class Departement {
 
         this.name = name;
         this.description = description;
+    }
+    public Departement(String name, String description,User Chef) {
+
+        this.name = name;
+        this.description = description;
+        this.ChefDepartment = Chef;
     }
 
     public int getId() {
@@ -55,6 +63,14 @@ public class Departement {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getChefDepartment() {
+        return ChefDepartment;
+    }
+
+    public void setChefDepartment(User chefDepartment) {
+        ChefDepartment = chefDepartment;
     }
 
     @Override
