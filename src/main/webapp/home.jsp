@@ -90,6 +90,61 @@
         function setEquId(id){
             document.getElementById('equipmentId').value = id ;
         }
+
+        function ChangeEmail(id,email,first,last,username){
+            document.getElementById('UpdateAccountId').value = id ;
+            document.getElementById('UpdateAccountFirst').value = first ;
+            document.getElementById('UpdateAccountLast').value = last ;
+            document.getElementById('UpdateAccountEmail').value = email ;
+            document.getElementById('UpdateAccountUsername').value = username ;
+        }
+
+        function myFunction1() {
+            var x = document.getElementById("myInput");
+
+            if (x.type === "password" ) {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function myFunction2() {
+            var y = document.getElementById("myInput1");
+
+            if (y.type === "password" ) {
+                y.type = "text";
+            } else {
+                y.type = "password";
+            }
+        }
+
+        function myFunction3() {
+            var z = document.getElementById("confirm_password");
+
+            if (z.type === "password" ) {
+                z.type = "text";
+            } else {
+                z.type = "password";
+            }
+        }
+
+        $('#confirm_password').on('keyup', function() {
+            checkPassword();
+        });
+
+        function checkPassword() {
+            var newPassword = $('#myInput1').val();
+            var confirmPassword = $('#confirm_password').val();
+            if (newPassword !== confirmPassword) {
+                $('#error').html('Passwords do not match');
+                $('#pass-update-btn').attr('disabled', true);
+            } else {
+                $('#error').html('');
+                $('#pass-update-btn').attr('disabled', false);
+            }
+        }
+
 </script>
 
 </html>
