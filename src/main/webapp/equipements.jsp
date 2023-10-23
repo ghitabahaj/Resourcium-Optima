@@ -126,8 +126,8 @@
 
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Equipment's Password</label>
-                            <input type="text" name="password-add" class="form-control"/>
+                            <label class="form-label">Equipment's date Of Purchase</label>
+                            <input type="date" name="date-add" class="form-control"/>
                         </div>
                     </div>
                     <div class="modal-footer">

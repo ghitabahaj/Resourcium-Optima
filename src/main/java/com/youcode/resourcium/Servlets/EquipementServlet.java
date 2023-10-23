@@ -18,9 +18,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet( urlPatterns = { "/equipements","/addEquipment"})
@@ -61,6 +62,42 @@ public class EquipementServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = request.getServletPath();
+        if(path.equals("/addEquipment") && request.getMethod().equals("POST")){
+            String equipmentName = request.getParameter("name-add");
+            String status = request.getParameter("status-name");
+            String type = request.getParameter("type-add");
+            String departmentId = request.getParameter("dep-id");
+            String dateofpurchase = request.getParameter("date-add");
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date dateOfPurchase = dateFormat.parse(dateofpurchase);
+                // Use the 'dateOfPurchase' Date object as needed
+
+                Departement departement = departmentService.getDepartementById(Long.parseLong(departmentId));
+                equipementService.saveEquipement(new Equipement(equipmentName, type, dateOfPurchase, status, departement));
+            } catch (ParseException | NumberFormatException e) {
+                // Handle the exceptions appropriately
+                e.printStackTrace(); // Print the stack trace for the exceptions
+            } catch (CustomEquipementException e) {
+                throw new RuntimeException(e);
+            }
+
+            List<Equipement> equipements = null;
+            try {
+                equipements = equipementService.getAllEquipements();
+            } catch (CustomEquipementException e) {
+                throw new RuntimeException(e);
+            }
+            List<Departement> departments = departmentService.getAllDepartements();
+            request.setAttribute("departments", departments);
+            request.setAttribute("equipements", equipements);
+            request.setAttribute("url","equipements");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+
+        }
+
 
 
 

@@ -4,6 +4,7 @@ import com.youcode.resourcium.Entities.Equipement;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -30,10 +31,13 @@ public class EquipementRepository {
         return entityManager.find(Equipement.class, id);
     }
 
-    public void save(Equipement equipement) {
+    public Equipement save(Equipement equipement) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
         entityManager.persist(equipement);
+        tx.commit();
+        return equipement;
     }
 
     public void update(Equipement equipement) {

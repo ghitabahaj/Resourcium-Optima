@@ -21,6 +21,10 @@ public class DepartementService {
     }
 
     public Departement saveDepartement(Departement department) {
+
+        if (department.getName() == null || department.getName().isEmpty()) {
+            throw new IllegalArgumentException("Department name cannot be null or empty");
+        }
          return departmentRepository.save(department);
     }
 

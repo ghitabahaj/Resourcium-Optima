@@ -44,12 +44,22 @@ public class Equipement {
         this.department = department;
     }
 
-    public Equipement(String name, String type, Date dateOfPurchase, Date dateOfMaintenance, String state) {
+    public Equipement(String name, String type, Date dateOfPurchase, Date dateOfMaintenance, String state , Departement dep) {
         this.name = name;
         this.type = type;
         this.dateOfPurchase = dateOfPurchase;
         this.dateOfMaintenance = dateOfMaintenance;
         this.state = state;
+        this.department = dep;
+    }
+
+    public Equipement(String name, String type, Date dateOfPurchase, String state , Departement dep) {
+        this.name = name;
+        this.type = type;
+        this.dateOfPurchase = dateOfPurchase;
+        this.dateOfMaintenance = dateOfMaintenance;
+        this.state = state;
+        this.department = dep;
     }
 
     public int getId() {
