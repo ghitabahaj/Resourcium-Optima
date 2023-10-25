@@ -17,13 +17,13 @@ public class UserService {
     }
 
     public User authenticateUser(String username, String password) {
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username!= null && username.isEmpty() || password!=null && password.isEmpty()) {
             throw new IllegalArgumentException("Username or password cannot be empty.");
         }
 
         User user = userRepository.getUserByUsername(username);
 
-        if (user != null) {
+        if (user != null &&  verifyPassword(password,user.getPassword())) {
             return user;
         } else {
             return null;

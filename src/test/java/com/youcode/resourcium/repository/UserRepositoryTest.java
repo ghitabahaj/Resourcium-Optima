@@ -24,16 +24,45 @@ public class UserRepositoryTest{
         UserService userService = new UserService(userRepository);
         Departement departement = new Departement("Departement","description");
         departementService.saveDepartement(departement);
-        User user = new User("john", "password", "John", "john@example.com", new Role(), "1234567890");
+        User user = new User("john", userService.hashPassword("password"), "John", "john@example.com", new Role(), "1234567890");
         user.setDepartement(departement);
         when(userRepository.getUserByUsername("john")).thenReturn(user);
 
 
-        // Act
+
         User result = userService.authenticateUser("john", "wrong_password");
 
 
         assertNull(result);
     }
+
+
+    @Test
+    public void null_password() {
+        // Arrange
+        UserRepository userRepository = mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+        User result = userService.authenticateUser("john", null);
+
+
+        assertNull(result);
+    }
+
+
+    @Test
+    public void null_username() {
+
+        UserRepository userRepository = mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+        User result = userService.authenticateUser(null, "password");
+
+
+        assertNull(result);
+    }
+
+
+
 
 }
