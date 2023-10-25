@@ -27,6 +27,16 @@ public class Reservation {
     @Column(name = "return_date")
     private LocalDate returnDate;
 
+
+    public Reservation(Equipement equipment, User employee, LocalDate reservationDate, LocalDate returnDate) {
+        this.equipment = equipment;
+        this.employee = employee;
+        this.reservationDate = reservationDate;
+        this.returnDate = returnDate;
+    }
+
+    public Reservation() {}
+
     public Equipement getEquipment() {
         return equipment;
     }

@@ -82,6 +82,15 @@ public class User {
         this.numberPhone = phone;
     }
 
+    public User(String john, String password, String john1, String mail, Role role, String number) {
+        this.username = john;
+        this.password = password;
+        this.firstName = john1;
+        this.email = mail;
+        this.role = role;
+        this.numberPhone = number;
+    }
+
     public Long getId() {
         return id;
     }

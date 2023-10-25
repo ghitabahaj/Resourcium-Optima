@@ -1,8 +1,11 @@
 package com.youcode.resourcium.repository;
 
+import com.youcode.resourcium.Entities.Departement;
 import com.youcode.resourcium.Entities.Reservation;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 
 public class ReservationRepository {
     private final EntityManagerFactory entityManagerFactory;
@@ -49,5 +52,12 @@ public class ReservationRepository {
         } finally {
             entityManager.close();
         }
+    }
+
+    public List<Reservation> findAll(){
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+       TypedQuery<Reservation> query = entityManager.createQuery("SELECT r FROM Reservation r", Reservation.class);
+        return query.getResultList();
+
     }
 }

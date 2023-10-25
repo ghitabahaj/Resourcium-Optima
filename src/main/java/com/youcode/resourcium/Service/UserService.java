@@ -23,7 +23,7 @@ public class UserService {
 
         User user = userRepository.getUserByUsername(username);
 
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null) {
             return user;
         } else {
             return null;

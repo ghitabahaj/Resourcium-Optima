@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div>
-                <a class="btn w-100 btn-light my-3 fs-6 mycolor3" > Log out</a>
-                <form id="logout-form" action="logout" method="POST" class="d-none">
+                <form id="logout-form" action="logout" method="POST">
+                    <button type="submit" class="btn w-100 btn-light my-3 fs-6 mycolor3">Log out</button>
                 </form>
             </div>
         </div>
