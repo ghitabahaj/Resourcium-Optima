@@ -68,7 +68,7 @@ class DepartementServiceTest {
         Departement department = new Departement(1L, "", "Description 1");
 
 
-        DepartementRepository departmentRepository = Mockito.mock(DepartementRepository.class);
+        DepartementRepository departmentRepository = mock(DepartementRepository.class);
 
 
         DepartementService departementService = new DepartementService(departmentRepository);

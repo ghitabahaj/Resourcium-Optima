@@ -68,7 +68,7 @@
 ">
                         </div>
                         <div class="form-group">
-                            <input type="hidden" class="form-control" id="equipmentId" name="equipmentId" value="">
+                            <input type="hidden" class="form-control" id="equipmentIdreserve" name="equipmentId" value="">
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <i class="uil uil-exclamation-triangle fs-1 text-danger me-3"></i>

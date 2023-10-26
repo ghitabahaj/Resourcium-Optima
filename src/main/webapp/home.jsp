@@ -88,7 +88,7 @@
         }
 
         function setEquId(id){
-            document.getElementById('equipmentId').value = id ;
+            document.getElementById('equipmentIdreserve').value = id ;
         }
 
         function ChangeEmail(id,email,first,last,username){

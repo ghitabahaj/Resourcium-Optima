@@ -68,7 +68,8 @@ public class ReservationServlet extends HttpServlet {
             reservation.setEmployee(employee);
             reservation.setEquipment(equipment);
             reservation.setReservationDate(LocalDate.now());
-            //    reservation.setReturnDate(returnDate);
+            reservation.setReturnDate((LocalDate.now().plusDays(1)));
+            System.out.println(reservation.getEquipment().getName());
 
             reservationService.saveReservation(reservation);
 

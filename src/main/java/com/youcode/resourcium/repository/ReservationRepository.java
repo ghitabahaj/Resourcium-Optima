@@ -16,22 +16,11 @@ public class ReservationRepository {
 
     public Reservation saveReservation(Reservation reservation) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = null;
-        try {
-            transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(reservation);
-            transaction.commit();
-            return reservation;
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-            return null;
-        } finally {
-            entityManager.close();
-        }
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+        entityManager.persist(reservation);
+        tx.commit();
+        return  reservation;
     }
 
     public void cancelReservation(Long reservationId) {
