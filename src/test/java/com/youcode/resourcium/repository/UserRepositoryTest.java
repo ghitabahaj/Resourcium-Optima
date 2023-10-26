@@ -17,7 +17,7 @@ public class UserRepositoryTest{
 
     @Test
     public void invalid_password() {
-        // Arrange
+
         UserRepository userRepository = mock(UserRepository.class);
         DepartementRepository departementRepository = mock(DepartementRepository.class);
         DepartementService departementService = new DepartementService(departementRepository);
@@ -39,7 +39,7 @@ public class UserRepositoryTest{
 
     @Test
     public void null_password() {
-        // Arrange
+
         UserRepository userRepository = mock(UserRepository.class);
         UserService userService = new UserService(userRepository);
 
@@ -62,7 +62,17 @@ public class UserRepositoryTest{
         assertNull(result);
     }
 
+    @Test
+    public void empty_username() {
 
+        UserRepository userRepository = mock(UserRepository.class);
+        UserService userService = new UserService(userRepository);
+
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.authenticateUser("", "password");
+        });
+    }
 
 
 }

@@ -22,13 +22,16 @@ public class DepartementService {
 
     public Departement saveDepartement(Departement department) {
 
-        if (department.getName() == null || department.getName().isEmpty()) {
+        if (department.getName() == null || department.getName().isEmpty() || department.getDescription() == null || department.getDescription().isEmpty())  {
             throw new IllegalArgumentException("Department name cannot be null or empty");
         }
          return departmentRepository.save(department);
     }
 
     public void updateDepartement(Departement department) {
+        if (department.getName() == null || department.getName().isEmpty() || department.getDescription() == null || department.getDescription().isEmpty())  {
+            throw new IllegalArgumentException("Department name cannot be null or empty");
+        }
         departmentRepository.update(department);
     }
 

@@ -48,18 +48,14 @@ public class LoginServlet extends HttpServlet {
         User user = userService.authenticateUser(username, password);
         System.out.println(password);
         System.out.println(user.getPassword());
-        if (user != null && userService.verifyPassword(password,user.getPassword())) {
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
 //            session.setAttribute("user",user);
-            session.setAttribute("username", user.getUsername());
-            session.setAttribute("email", user.getEmail());
-            session.setAttribute("FirstName", user.getFirstName());
-            session.setAttribute("LastName", user.getLastName());
-            session.setAttribute("id", user.getId());
-            response.sendRedirect("home.jsp");
-        } else {
-            response.sendRedirect("login.jsp");
-        }
+        session.setAttribute("username", user.getUsername());
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("FirstName", user.getFirstName());
+        session.setAttribute("LastName", user.getLastName());
+        session.setAttribute("id", user.getId());
+        response.sendRedirect("home.jsp");
     }
 
 
