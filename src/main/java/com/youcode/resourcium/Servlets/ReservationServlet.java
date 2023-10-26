@@ -9,8 +9,10 @@ import com.youcode.resourcium.Service.EquipementService;
 import com.youcode.resourcium.Service.ReservationService;
 import com.youcode.resourcium.Service.UserService;
 import com.youcode.resourcium.repository.EquipementRepository;
+import com.youcode.resourcium.repository.ReservationRepository;
 import com.youcode.resourcium.repository.UserRepository;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,10 +24,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 
-@WebServlet("/reserveEquipment")
+@WebServlet( urlPatterns = {"/saveReservation"})
 public class ReservationServlet extends HttpServlet {
 
-    private EntityManagerFactory entityManagerFactory;
     private ReservationService reservationService;
 
     private EquipementService equipementService;
@@ -35,38 +36,39 @@ public class ReservationServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         UserRepository userRepository = new UserRepository(entityManagerFactory);
         userService = new UserService(userRepository);
         EquipementRepository equipementRepository = new EquipementRepository(entityManagerFactory);
         equipementService =  new EquipementService(equipementRepository);
-
+        ReservationRepository reservationRepository = new ReservationRepository(entityManagerFactory);
+        reservationService = new ReservationService(reservationRepository);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo().equals("/saveReservation")) {
-            Long employeeId = Long.parseLong(req.getParameter("employeeId"));
+        String path = req.getServletPath();
+        if (path.equals("/saveReservation")) {
+            String input = req.getParameter("employeeId").trim().replaceAll("[^\\d]", "");
+            Long employeeId = Long.parseLong(input);
             int equipmentId = Integer.parseInt(req.getParameter("equipmentId"));
-            LocalDate reservationDate = LocalDate.parse(req.getParameter("reservationDate"));
-            LocalDate returnDate = LocalDate.parse(req.getParameter("returnDate"));
+//            LocalDate reservationDate = LocalDate.parse(req.getParameter("reservationDate"));
+//            LocalDate returnDate = LocalDate.parse(req.getParameter("returnDate"));
 
             User employee = userService.getUserById(employeeId);
 
             Equipement equipment = null;
             try {
                 equipment = equipementService.getEquipementById(equipmentId);
-            } catch (EquipementNotFoundException e) {
-                throw new RuntimeException(e);
-            } catch (CustomEquipementException e) {
+            } catch (EquipementNotFoundException | CustomEquipementException e) {
                 throw new RuntimeException(e);
             }
 
             Reservation reservation = new Reservation();
             reservation.setEmployee(employee);
             reservation.setEquipment(equipment);
-            reservation.setReservationDate(reservationDate);
-            reservation.setReturnDate(returnDate);
+            reservation.setReservationDate(LocalDate.now());
+            //    reservation.setReturnDate(returnDate);
 
             reservationService.saveReservation(reservation);
 
@@ -76,6 +78,16 @@ public class ReservationServlet extends HttpServlet {
             reservationService.cancelReservation(reservationId);
 
             resp.sendRedirect("cancellationSuccess.jsp");
+        }else if (req.getPathInfo().equals("/updateReservation")) {
+            Long reservationId = Long.parseLong(req.getParameter("reservationId"));
+            String input = req.getParameter("employeeId").trim().replaceAll("[^\\d]", "");
+            Long employeeId = Long.parseLong(input);
+            int equipmentId = Integer.parseInt(req.getParameter("equipmentId"));
+            LocalDate reservationDate = LocalDate.parse(req.getParameter("reservationDate"));
+            LocalDate returnDate = LocalDate.parse(req.getParameter("returnDate"));
+            User employee = userService.getUserById(employeeId);
+            Equipement equipment = null;
+
         }
     }
 }

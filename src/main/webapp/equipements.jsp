@@ -62,9 +62,9 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form for reserving equipment -->
-                    <form action="reserveEquipment" method="POST">
+                    <form action="saveReservation" method="POST">
                         <div class="form-group">
-                            <input type="hidden" class="form-control" id="employeeId" name="employeeId" value="<%= request.getSession().getAttribute("id") %>
+                            <input type="hidden" class="form-control" id="employeeId" name="employeeId" value="<%= request.getSession().getAttribute("id").toString().trim().replaceAll("[^\\d]", "") %>
 ">
                         </div>
                         <div class="form-group">
